@@ -20,11 +20,14 @@ int button_val;
 int last_button_val = 0;
 bool button_pressed = false;
 int last_button_press = 0;
+int button_debounce = 50;   // ms
 
 //  variables para manejar efectos
-int effects_counter = 0;
 int total_effects = 3;
-bool is_turn_off = false;  // si esta apagado todo
+int effects_counter = 0;
+int effect_vel = 50;                     // ms (debounce time)
+unsigned long last_activation_time = 0;   // para debounce tracking 
+bool is_turn_off = false;                 // si esta apagado todo
 
 //  variables para intercalateLED
 int intercalate_i = 0;    // contador para funcion intercalateLed
@@ -37,9 +40,7 @@ int fade_count = 0;
 
 // variables para intercalateIn y intercalateOut
 int activation_counter = 0;  // contador para leds activados
-int debounce_time = 100;     // ms
 bool reverse = false;
-unsigned long last_activation_time = 0;
 byte activation_state = HIGH;
 
 
@@ -72,7 +73,7 @@ void checkButtonPress(){
 
   if (button_val && !last_button_val){
     // chequear debounce
-    if (millis() - last_button_press > 50){
+    if (millis() - last_button_press > button_debounce){
       last_button_press = millis();
       button_pressed = true;
     }
@@ -135,16 +136,20 @@ void setLedsIntensity(int intensity){
 }
 
 
+
+/* *** EFECTOS *** */
 // regular la intensidad progresivamente con pwm 
 void fadeLeds(){
-  setLedsIntensity(fade_count);
-  fade_count = fade_count + fade_step;
+  if (millis() - last_activation_time > effect_vel){
+    last_activation_time = millis();
 
-  if (fade_count == 255 || fade_count == 0){
-    fade_step = -fade_step;
+    setLedsIntensity(fade_count);
+    fade_count = fade_count + fade_step;
+
+    if (fade_count == 255 || fade_count == 0){
+      fade_step = -fade_step;
+    }
   }
-
-  delay(fade_vel);
 }
 
 
@@ -180,7 +185,7 @@ void intercalateInOut(){
 
 // Enciende y apaga de led 1 a 6
 void turnOnLedsSequentially() {
-  if (millis() - last_activation_time > debounce_time){
+  if (millis() - last_activation_time > effect_vel){
     last_activation_time = millis();
 
     // cambiar estado de luces progresivamente
@@ -207,7 +212,7 @@ void turnOnLedsSequentially() {
 
 // reversa de turnOnLedsSequentially
 void turnOffLedsSequentially() {
-  if (millis() - last_activation_time > debounce_time){
+  if (millis() - last_activation_time > effect_vel){
     last_activation_time = millis();    // actualizar tiempo
 
     // cambiar estado de luces progresivamente
