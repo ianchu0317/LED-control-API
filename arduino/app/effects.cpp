@@ -1,13 +1,14 @@
 #include "effects.h"
 
 /* *** DEFINIR PINES *** */
+#define NUM_LEDS 6
 const byte led_1 = 11;
 const byte led_2 = 10;
 const byte led_3 = 9;
 const byte led_4 = 6;
 const byte led_5 = 5;
 const byte led_6 = 3;
-const byte leds[6] = {led_1, led_2, led_3, led_4, led_5, led_6};
+const byte leds[NUM_LEDS] = {led_1, led_2, led_3, led_4, led_5, led_6};
 
 const byte fuente = 13;     // pin para usar como fuente 3.3V
 const byte pinButton = 2;   // entrada del botón
@@ -32,8 +33,8 @@ bool is_turn_off = false;                 // si esta apagado todo
 //  variables para intercalateLED
 int intercalate_i = 0;    // contador para funcion intercalateLed
 int intercalate_step = 1;
-int intercalate_vel = 50; // ms (velocidad debounce)
-byte intercalate_led_state = HIGH;
+int intercalate_vel = 30; // ms (velocidad debounce)
+int previous_intercalate_i = 0;
 
 //  variables para fade 
 int fade_step = 15;       // cambio de intensidad
@@ -161,20 +162,15 @@ void intercalateLed(){
 
     byte led = leds[intercalate_i];
 
-    digitalWrite(led, intercalate_led_state);
+    // apagar todos los leds antes de encender actual
+    setLedsIntensity(0);
+    // encender LED actual
+    digitalWrite(led, HIGH);
+
+    intercalate_i = intercalate_i + intercalate_step;
     
-    // actualizar el estado del led
-    if (intercalate_led_state == HIGH){
-      intercalate_led_state = LOW;
-    } else {
-      // continuar con el siguiente LED
-      intercalate_led_state = HIGH;
-      intercalate_i = intercalate_i + intercalate_step;
-    }
-    
-    if (intercalate_i > 5 || intercalate_i < 0){
+    if (intercalate_i == NUM_LEDS - 1 || intercalate_i == 0){
       intercalate_step = -intercalate_step;
-      intercalate_i = intercalate_i + 2*intercalate_step;   // 2 veces intercalate_step para no repetir valor finales
     }
   }
 }
