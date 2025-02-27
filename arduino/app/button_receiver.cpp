@@ -43,13 +43,13 @@ void setupButtons() {
 /* *** FUNCIONES *** */
 // Auxiliares
 void speedUpEffects(){
-  effect_vel = effect_vel - 10;
+  effect_vel = effect_vel - 12;
   intercalate_vel = intercalate_vel - 5;
 }
 
 
 void speedDownEffects(){
-  effect_vel = effect_vel + 10;
+  effect_vel = effect_vel + 12;
   intercalate_vel = intercalate_vel + 5;
 }
 
@@ -107,6 +107,12 @@ void checkVelButtonByPin(byte pin){
       } else {
         speedDownEffects();
       }
+      // Debug
+      Serial.print("Effect vel (ms): ");
+      Serial.println(effect_vel);
+      Serial.print("Intercalate vel (ms): ");
+      Serial.println(intercalate_vel);
+      Serial.println();
     }
   }
 
