@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from schemas import LedSpeed
-from controllers import next_effect
+from schemas import LedSpeedLevel
+from controllers import next_effect, set_speed
 
 api = FastAPI()
 
@@ -12,6 +12,6 @@ def change_effect():
 
 
 @api.post("/api/led/change_speed")
-def change_speed(speed: LedSpeed):
-    pass
+def change_speed(speed: LedSpeedLevel):
+    return set_speed(speed.level)
 
