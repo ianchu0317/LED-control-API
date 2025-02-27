@@ -29,8 +29,11 @@ def send_pulse(pin):
     print("Pulse sent!")
 
 
+# Función para cambiar al siguiente efecto
 def next_effect():
-    pass
+    send_pulse(pin_effect_button)
+    return "Change effect success !!"
+
 
 def set_speed():
     return
