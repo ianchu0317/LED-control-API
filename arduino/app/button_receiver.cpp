@@ -2,22 +2,25 @@
 
 /* *** VARIABLES *** */
 // DEFINICIONES DE PINES
-const byte pinButton = 2;  // entrada del botón
-const byte fuente = 13;    // pin para usar como fuente 3.3V
+// Botón cambio de efectos
+const byte pinEffectButton = 2;  // entrada del botón
+const byte fuente = 13;    // pin para usar como fuente 5V boton 
+// Botones de velocidades
+
 
 // Variables para manipular controlamiento del botón  
-int button_val;
-int last_button_val = 0;
-bool button_pressed = false;
-int last_button_press = 0;
-int button_debounce = 50;   // ms
+int effect_button_val;
+int last_effect_button_val = 0;
+bool effect_button_pressed = false;
+int last_effect_button_press = 0;
+int effect_button_debounce = 200;   // ms para evitar ruido
 
 
 
 /* *** CONFIGURACIONES *** */
 // configurar botón
 void setupButton() {
-  pinMode(pinButton, INPUT);
+  pinMode(pinEffectButton, INPUT);
 
   // salida de fuente para boton en pulldown
   pinMode(fuente, OUTPUT);
@@ -30,22 +33,22 @@ void setupButton() {
 // chequear estado del botón
 void checkButtonPress() {
 
-  button_val = digitalRead(pinButton);
+  effect_button_val = digitalRead(pinEffectButton);
 
-  if (button_val && !last_button_val) {
+  if (effect_button_val && !last_effect_button_val) {
     // chequear debounce
-    if (millis() - last_button_press > button_debounce) {
-      last_button_press = millis();
-      button_pressed = true;
+    if (millis() - last_effect_button_press > effect_button_debounce) {
+      last_effect_button_press = millis();
+      effect_button_pressed = true;
     }
   }
 
-  last_button_val = button_val;
+  last_effect_button_val = effect_button_val;
 
   // cambiar efecto
-  if (button_pressed) {
+  if (effect_button_pressed) {
     effects_counter += 1;
-    button_pressed = false;
+    effect_button_pressed = false;
     is_turn_off = false;
   }
 
