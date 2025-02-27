@@ -3,16 +3,26 @@
 
 #include "Arduino.h"
 
+/* *** VARIABLES GLOBALES *** */
+extern int effects_counter;
+extern int effect_vel;
+extern int intercalate_vel;
+extern bool is_turn_off;
+extern int total_effects;
+
+/* *** FUNCIONES *** */
+// Configuraciones
 void setupLeds();
-void setupButton();
-void checkButtonPress();
+// Auxiliares
 void switchEffect();
 void turnOff();
 void setLedsIntensity(int intensity);
+void turnOnLedsSequentially();
+void turnOffLedsSequentially();
+// Efectos
 void intercalateLed();
 void fadeLeds();
 void intercalateInOut();
-void turnOnLedsSequentially();
-void turnOffLedsSequentially();
+
 
 #endif

@@ -8,36 +8,28 @@ const byte led_3 = 9;
 const byte led_4 = 6;
 const byte led_5 = 5;
 const byte led_6 = 3;
-const byte leds[NUM_LEDS] = {led_1, led_2, led_3, led_4, led_5, led_6};
-
-const byte fuente = 13;     // pin para usar como fuente 3.3V
-const byte pinButton = 2;   // entrada del botón
+const byte leds[NUM_LEDS] = { led_1, led_2, led_3, led_4, led_5, led_6 };
 
 
 
 /* *** VARIABLES ****/
-// variables para manipular botón  
-int button_val;
-int last_button_val = 0;
-bool button_pressed = false;
-int last_button_press = 0;
-int button_debounce = 50;   // ms
-
 //  variables para manejar efectos
-int total_effects = 3;
+// variables modificables
 int effects_counter = 0;
-int effect_vel = 50;                     // ms (debounce time)
-unsigned long last_activation_time = 0;   // para debounce tracking 
-bool is_turn_off = false;                 // si esta apagado todo
+int effect_vel = 50;  // ms (debounce time)
+// variables del programa
+int total_effects = 3;
+unsigned long last_activation_time = 0;  // para debounce tracking
+bool is_turn_off = false;                // si esta apagado todo
 
 //  variables para intercalateLED
-int intercalate_i = 0;    // contador para funcion intercalateLed
+int intercalate_i = 0;  // contador para funcion intercalateLed
 int intercalate_step = 1;
-int intercalate_vel = 30; // ms (velocidad debounce)
+int intercalate_vel = 30;  // ms (velocidad debounce)  MODIFICABLE
 int previous_intercalate_i = 0;
 
-//  variables para fade 
-int fade_step = 15;       // cambio de intensidad
+//  variables para fade
+int fade_step = 15;  // cambio de intensidad
 int fade_count = 0;
 
 // variables para intercalateIn y intercalateOut
@@ -49,64 +41,25 @@ byte activation_state = HIGH;
 
 /* *** CONFIGURACIONES *** */
 // configurar salidas de led
-void setupLeds(){
+void setupLeds() {
   byte led;
-  for (int i = 0; i <= 5; i++){
+  for (int i = 0; i <= 5; i++) {
     led = leds[i];
     pinMode(led, OUTPUT);
   }
 }
 
 
-// configurar botón 
-void setupButton(){
-  pinMode(pinButton, INPUT);
-
-  // salida de fuente para boton en pulldown
-  pinMode(fuente, OUTPUT); 
-  digitalWrite(fuente, HIGH);
-}
-
-
-// chequear estado del botón
-void checkButtonPress(){
-  
-  button_val = digitalRead(pinButton); 
-
-  if (button_val && !last_button_val){
-    // chequear debounce
-    if (millis() - last_button_press > button_debounce){
-      last_button_press = millis();
-      button_pressed = true;
-    }
-  }
-  
-  last_button_val = button_val;
-  
-  // cambiar efecto
-  if (button_pressed){
-    effects_counter += 1;
-    button_pressed = false;
-    is_turn_off = false;  
-  }
-
-  // resetear efecto si ya se pasaron todos
-  if (effects_counter > total_effects){
-    effects_counter = 0;
-  }
-}
-
-
-// cambiar efecto actual 
-void switchEffect(){
-  switch (effects_counter){
+// cambiar efecto actual
+void switchEffect() {
+  switch (effects_counter) {
     case 0:
       turnOff();
       break;
     case 1:
       intercalateLed();
       break;
-    case 2: 
+    case 2:
       fadeLeds();
       break;
     case 3:
@@ -117,11 +70,10 @@ void switchEffect(){
 
 
 
-
 /* *** FUNCIONES *** */
 // apagar todos los LEDs si no están apagados
-void turnOff(){
-  if (!is_turn_off){
+void turnOff() {
+  if (!is_turn_off) {
     setLedsIntensity(0);
     is_turn_off = true;
   }
@@ -129,9 +81,9 @@ void turnOff(){
 
 
 // configurar todos los LED dada una intensidad
-void setLedsIntensity(int intensity){
+void setLedsIntensity(int intensity) {
   byte led;
-  for (int i = 0; i <= 5; i++){
+  for (int i = 0; i <= 5; i++) {
     led = leds[i];
     analogWrite(led, intensity);
   }
@@ -140,15 +92,15 @@ void setLedsIntensity(int intensity){
 
 
 /* *** EFECTOS *** */
-// regular la intensidad progresivamente con pwm 
-void fadeLeds(){
-  if (millis() - last_activation_time > effect_vel){
+// regular la intensidad progresivamente con pwm
+void fadeLeds() {
+  if (millis() - last_activation_time > effect_vel) {
     last_activation_time = millis();
 
     setLedsIntensity(fade_count);
     fade_count = fade_count + fade_step;
 
-    if (fade_count == 255 || fade_count == 0){
+    if (fade_count == 255 || fade_count == 0) {
       fade_step = -fade_step;
     }
   }
@@ -156,8 +108,8 @@ void fadeLeds(){
 
 
 // alternar el encendido y apagado de los LEDs
-void intercalateLed(){
-  if (millis() - last_activation_time > intercalate_vel){
+void intercalateLed() {
+  if (millis() - last_activation_time > intercalate_vel) {
     last_activation_time = millis();
 
     byte led = leds[intercalate_i];
@@ -168,8 +120,8 @@ void intercalateLed(){
     digitalWrite(led, HIGH);
 
     intercalate_i = intercalate_i + intercalate_step;
-    
-    if (intercalate_i == NUM_LEDS - 1 || intercalate_i == 0){
+
+    if (intercalate_i == NUM_LEDS - 1 || intercalate_i == 0) {
       intercalate_step = -intercalate_step;
     }
   }
@@ -181,29 +133,29 @@ void intercalateLed(){
   A diferencia del anterior también los apaga
   Los LEDs prendidos se mantienen prendidos por un momento
 */
-void intercalateInOut(){
-  if (!reverse){
+void intercalateInOut() {
+  if (!reverse) {
     turnOnLedsSequentially();
   } else {
-    turnOffLedsSequentially() ;
+    turnOffLedsSequentially();
   }
 }
 
 
 // Enciende y apaga de led 1 a 6
 void turnOnLedsSequentially() {
-  if (millis() - last_activation_time > effect_vel){
+  if (millis() - last_activation_time > effect_vel) {
     last_activation_time = millis();
 
     // cambiar estado de luces progresivamente
     int currentLed = leds[activation_counter];
     digitalWrite(currentLed, activation_state);
 
-    // seguir index de contador 
-    if (activation_counter == 5){
-      if (activation_state == LOW){
+    // seguir index de contador
+    if (activation_counter == 5) {
+      if (activation_state == LOW) {
         // hard reset
-        reverse = true;  
+        reverse = true;
         activation_state = HIGH;
       } else {
         // resetear por primera vez
@@ -219,20 +171,20 @@ void turnOnLedsSequentially() {
 
 // reversa de turnOnLedsSequentially
 void turnOffLedsSequentially() {
-  if (millis() - last_activation_time > effect_vel){
-    last_activation_time = millis();    // actualizar tiempo
+  if (millis() - last_activation_time > effect_vel) {
+    last_activation_time = millis();  // actualizar tiempo
 
     // cambiar estado de luces progresivamente
     int currentLed = leds[activation_counter];
     digitalWrite(currentLed, activation_state);
-    
-    // seguir index de contador 
-    if (activation_counter == 0){
-      if (activation_state == LOW){
-        reverse = false;  
+
+    // seguir index de contador
+    if (activation_counter == 0) {
+      if (activation_state == LOW) {
+        reverse = false;
         activation_state = HIGH;
       } else {
-        activation_counter = 5; 
+        activation_counter = 5;
         activation_state = LOW;
       }
     } else {

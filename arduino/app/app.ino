@@ -1,4 +1,5 @@
 #include "effects.h"
+#include "button_receiver.h"
 
 void setup() {
   setupLeds();
