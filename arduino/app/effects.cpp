@@ -32,9 +32,10 @@ bool is_turn_off = false;                 // si esta apagado todo
 //  variables para intercalateLED
 int intercalate_i = 0;    // contador para funcion intercalateLed
 int intercalate_step = 1;
+int intercalate_vel = 50; // ms (velocidad debounce)
+byte intercalate_led_state = HIGH;
 
 //  variables para fade 
-int fade_vel = 5;         // velocidad de fade en ms
 int fade_step = 15;       // cambio de intensidad
 int fade_count = 0;
 
@@ -155,16 +156,26 @@ void fadeLeds(){
 
 // alternar el encendido y apagado de los LEDs
 void intercalateLed(){
-  byte led = leds[intercalate_i];
+  if (millis() - last_activation_time > intercalate_vel){
+    last_activation_time = millis();
 
-  digitalWrite(led, HIGH);
-  delay(50);
-  digitalWrite(led, LOW);
-  
-  intercalate_i = intercalate_i + intercalate_step;
-  
-  if (intercalate_i == 5 || intercalate_i == 0){
-    intercalate_step = -intercalate_step;
+    byte led = leds[intercalate_i];
+
+    digitalWrite(led, intercalate_led_state);
+    
+    // actualizar el estado del led
+    if (intercalate_led_state == HIGH){
+      intercalate_led_state = LOW;
+    } else {
+      // continuar con el siguiente LED
+      intercalate_led_state = HIGH;
+      intercalate_i = intercalate_i + intercalate_step;
+    }
+    
+    if (intercalate_i > 5 || intercalate_i < 0){
+      intercalate_step = -intercalate_step;
+      intercalate_i = intercalate_i + 2*intercalate_step;   // 2 veces intercalate_step para no repetir valor finales
+    }
   }
 }
 
