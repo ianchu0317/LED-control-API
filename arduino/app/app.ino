@@ -2,15 +2,16 @@
 #include "button_receiver.h"
 
 void setup() {
+  setupButtons();
   setupLeds();
-  setupButton();
 
   // salida Serial para debug
   Serial.begin(9600);
 }
 
 void loop() {
-  checkButtonPress();
+  checkEffectButtonPress();
+  checkVelButtons();
   switchEffect();
   //delay(50);
 }

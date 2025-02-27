@@ -3,7 +3,12 @@
 
 #include "Arduino.h"
 
-void setupButton();
-void checkButtonPress();
+/* *** CONFIGURACIONES *** */
+void setupButtons();
+
+/* *** FUNCIONES *** */
+void checkEffectButtonPress();
+void checkVelButtonByPin(byte pin);
+void checkVelButtons();
 
 #endif
