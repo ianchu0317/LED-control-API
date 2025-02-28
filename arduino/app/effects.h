@@ -5,8 +5,9 @@
 
 /* *** VARIABLES GLOBALES *** */
 extern int effects_counter;
-extern int effect_vel;
+extern int fade_vel;
 extern int intercalate_vel;
+extern int intercalate_in_out_vel;
 extern bool is_turn_off;
 extern int total_effects;
 
