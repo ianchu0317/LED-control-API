@@ -16,7 +16,7 @@ const byte leds[NUM_LEDS] = { led_1, led_2, led_3, led_4, led_5, led_6 };
 //  variables para manejar efectos
 // variables modificables
 int effects_counter = 0;
-int effect_vel = 30;  // ms (debounce time)
+int effect_vel = 40;  // ms (debounce time)
 // variables del programa
 int total_effects = 3;
 unsigned long last_activation_time = 0;  // para debounce tracking
@@ -25,7 +25,7 @@ bool is_turn_off = false;                // si esta apagado todo
 //  variables para intercalateLED
 int intercalate_i = 0;  // contador para funcion intercalateLed
 int intercalate_step = 1;
-int intercalate_vel = 30;  // ms (velocidad debounce)  MODIFICABLE
+int intercalate_vel = 60;  // ms (velocidad debounce)  MODIFICABLE
 int previous_intercalate_i = 0;
 
 //  variables para fade

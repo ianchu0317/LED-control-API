@@ -20,8 +20,12 @@ int effect_button_debounce = 200;   // ms para evitar ruido
 // Variables para botones de velocidades
 int vel_button_val;
 int last_vel_button_val = 0;
-int vel_button_debounce = 20;       // ms
+int vel_button_debounce = 50;       // ms
 unsigned long last_vel_button_press = 0;
+
+#define MAX_SPEED_LEVEL 9
+#define MIN_SPEED_LEVEL 1
+int current_level = 5;
 
 
 /* *** CONFIGURACIONES *** */
@@ -43,14 +47,20 @@ void setupButtons() {
 /* *** FUNCIONES *** */
 // Auxiliares
 void speedUpEffects(){
-  effect_vel = effect_vel - 12;
-  intercalate_vel = intercalate_vel - 5;
+  if (current_level < MAX_SPEED_LEVEL){
+    effect_vel = effect_vel - 5;
+    intercalate_vel = intercalate_vel - 5;
+    current_level = current_level + 1;
+  }
 }
 
 
 void speedDownEffects(){
-  effect_vel = effect_vel + 12;
-  intercalate_vel = intercalate_vel + 5;
+  if (current_level > MIN_SPEED_LEVEL){
+    effect_vel = effect_vel + 5;
+    intercalate_vel = intercalate_vel + 5;
+    current_level = current_level - 1;
+  }
 }
 
 void checkVelButtonByPin(byte pin);   // declarar funcion antes de usar
@@ -107,7 +117,10 @@ void checkVelButtonByPin(byte pin){
       } else {
         speedDownEffects();
       }
-      // Debug
+
+      // Debug Velocity
+      Serial.print("Current level: ");
+      Serial.println(current_level);
       Serial.print("Effect vel (ms): ");
       Serial.println(effect_vel);
       Serial.print("Intercalate vel (ms): ");
