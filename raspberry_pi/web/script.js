@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // URLs routing del API 
-    let urlChangeEffect = 'http://127.0.0.1:8000/api/led/change_effect';
-    let urlSetSpeed = 'http://127.0.0.1:8000/api/led/change_speed';
+    let urlChangeEffect = 'http://192.168.248.68:8000/api/led/change_effect';
+    let urlSetSpeed = 'http://192.168.248.68:8000/api/led/change_speed';
 
 
     const enableButton = () => {
