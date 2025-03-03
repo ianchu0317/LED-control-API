@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedValue = document.getElementById('speedValue');
     let cooldown = false;
 
+    // URLs routing del API 
+    let urlChangeEffect = 'http://127.0.0.1:8000/api/led/change_effect';
+    let urlSetSpeed = 'http://127.0.0.1:8000/api/led/change_speed';
+
     const enableButton = () => {
         changeEffectButton.disabled = false;
         cooldown = false;
@@ -14,12 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
         cooldown = true;
         changeEffectButton.disabled = true;
 
-        fetch('http://192.168.248.68:8000/api/led/change_effect', {
-            method: 'POST'/*,
-            /*headers: {
-                'Content-Type': 'application/json'
-            },*/
-            //body: JSON.stringify({ efecto: 'siguiente' })
+        fetch(urlChangeEffect, {
+            method: 'POST',
+            mode: 'no-cors'
         })
         .then(response => response.json())
         .then(data => {
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const speed = speedSlider.value;
 
-        fetch('http://192.168.248.68:8000/api/led/change_speed', {
+        fetch(urlSetSpeed, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
