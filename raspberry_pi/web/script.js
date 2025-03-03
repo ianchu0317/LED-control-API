@@ -4,14 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedValue = document.getElementById('speedValue');
     let cooldown = false;
 
+
     // URLs routing del API 
     let urlChangeEffect = 'http://127.0.0.1:8000/api/led/change_effect';
     let urlSetSpeed = 'http://127.0.0.1:8000/api/led/change_speed';
+
 
     const enableButton = () => {
         changeEffectButton.disabled = false;
         cooldown = false;
     };
+
 
     changeEffectButton.addEventListener('click', () => {
         if (cooldown) return;
@@ -20,7 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(urlChangeEffect, {
             method: 'POST',
-            mode: 'no-cors'
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'effect': 'next' })
         })
         .then(response => response.json())
         .then(data => {
@@ -32,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             enableButton();
         });
     });
+
 
     speedSlider.addEventListener('input', () => {
         if (cooldown) return;
