@@ -8,12 +8,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // URLs routing del API 
     let urlChangeEffect = 'http://192.168.248.68:8000/api/leds/change-effect';
     let urlSetSpeed = 'http://192.168.248.68:8000/api/leds/change-speed';
+    let urlGetSpeed = 'http://192.168.248.68:8000/api/leds/get-speed';
+
+    // Constante de intervalo para fetch velocidad
+    const FETCH_INTERVAL_MS = 1000; // 1000 milisegundos (1 segundo)
 
 
     const enableButton = () => {
         changeEffectButton.disabled = false;
         cooldown = false;
     };
+
+
+    // Fetch inicial para obtener la velocidad actual
+    async function fetchSpeed() {
+        try {
+            const response = await fetch(urlGetSpeed);
+            if (!response.ok) throw new Error("Error al obtener la velocidad");
+
+            const data = await response.json();
+            speedSlider.value = data.level; // Asigna el valor a la barra
+            speedValue.textContent = data.level; // Muestra el valor en pantalla
+        } catch (error) {
+            console.error("Error al obtener la velocidad:", error);
+        }
+    }
+
+    // Llamar al fetch inicial
+    fetchSpeed();
+
+    // Intervalo para actualizar la velocidad cada 2 segundos
+    setInterval(fetchSpeed, FETCH_INTERVAL_MS);
 
 
     changeEffectButton.addEventListener('click', () => {
