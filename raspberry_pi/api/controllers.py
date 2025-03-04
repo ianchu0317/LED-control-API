@@ -58,6 +58,11 @@ def calculate_steps(speed_level: int) -> int:
 
 
 ## RESPUESTA DEL ROUTING
+# Obtener velocidad actual
+def get_speed_value() -> int:
+    return current_level
+
+
 # Función para cambiar al siguiente efecto
 def set_next_effect():
     send_pulse(pin_effect_button)
@@ -80,7 +85,7 @@ def set_speed(speed_level: int):
 
     current_level = speed_level
     #print(current_level)
-    return current_level
+    #return current_level
 
 
 

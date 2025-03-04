@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             console.log('Velocidad cambiada:', data);
-            speedValue.textContent = data.velocity; // Actualizar la velocidad mostrada en pantalla
+            speedValue.textContent = data.level; // Actualizar la velocidad mostrada en pantalla
             setTimeout(() => { cooldown = false; }, 500); // Cooldown de 0.5 segundos
         })
         .catch(error => {
