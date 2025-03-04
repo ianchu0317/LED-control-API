@@ -16,17 +16,17 @@ api.add_middleware(
 )
 
 
-@api.post("/api/led/change_effect")
+@api.post("/api/leds/change-effect")
 def change_effect(next_effect: GetNextEffect):
     print("CHANGING EFFECT")
     set_next_effect()
     return {"message": "success"}
 
 
-@api.post("/api/led/change_speed")
+@api.post("/api/leds/change-speed")
 def change_speed(speed: LedSpeedLevel):
     print("GOT INPUT SPEED: ", speed.level)
     current_level = set_speed(speed.level)
     # Devolver velocidad actual JSON
-    return {'velocidad': current_level}
+    return {'velocity': current_level}
 

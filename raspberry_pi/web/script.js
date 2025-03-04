@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // URLs routing del API 
-    let urlChangeEffect = 'http://192.168.248.68:8000/api/led/change_effect';
-    let urlSetSpeed = 'http://192.168.248.68:8000/api/led/change_speed';
+    let urlChangeEffect = 'http://192.168.248.68:8000/api/leds/change-effect';
+    let urlSetSpeed = 'http://192.168.248.68:8000/api/leds/change-speed';
 
 
     const enableButton = () => {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             console.log('Velocidad cambiada:', data);
-            speedValue.textContent = data.velocidad; // Actualizar la velocidad mostrada en pantalla
+            speedValue.textContent = data.velocity; // Actualizar la velocidad mostrada en pantalla
             setTimeout(() => { cooldown = false; }, 500); // Cooldown de 0.5 segundos
         })
         .catch(error => {
