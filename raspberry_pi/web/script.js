@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const changeEffectButton = document.getElementById('changeEffectButton');
+    const effectButton = document.getElementById('changeEffectButton');
     const speedSlider = document.getElementById('speedSlider');
     const speedValue = document.getElementById('speedValue');
-    let cooldown = false;
 
+    // Cooldown del efecto del botón
+    let effectCooldown = false;
+    let speedCooldown = false;
+    let effectCooldownTime = 1000;  // 1000 ms
+    let speedCooldownTime = 1000;    // 1000 ms
 
     // URLs routing del API 
     let urlChangeEffect = 'http://192.168.248.68:8000/api/leds/change-effect';
@@ -11,16 +15,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let urlGetSpeed = 'http://192.168.248.68:8000/api/leds/get-speed';
 
     // Constante de intervalo para fetch velocidad
-    const FETCH_INTERVAL_MS = 1000; // 1000 milisegundos (1 segundo)
+    const FETCH_INTERVAL_MS = 500; // 500 milisegundos (0.5 segundos)
 
+    
+    // ==========================
+    // FUNCIONES AUXILIARES
+    // ==========================
 
-    const enableButton = () => {
+   /**
+    * Habilitar botón de cambio de efectos
+    */
+     
+    const enableEffectButton = () => {
         changeEffectButton.disabled = false;
-        cooldown = false;
+        effectCooldown = false;
     };
 
 
-    // Fetch inicial para obtener la velocidad actual
+
+    // ==========================
+    // FUNCIONES PRINCIPALES
+    // ==========================
+
+   /**
+    * Fetch para obtener y sincronizar velocidad con servidor
+    */
     async function fetchSpeed() {
         try {
             const response = await fetch(urlGetSpeed);
@@ -34,16 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Llamar al fetch inicial
-    fetchSpeed();
 
-    // Intervalo para actualizar la velocidad cada 2 segundos
-    setInterval(fetchSpeed, FETCH_INTERVAL_MS);
+   /**
+    * Fetch para sincronizar velocidad con servidor
+    */
+    function changeEffect() {
+        if (effectCooldown) return;
 
-
-    changeEffectButton.addEventListener('click', () => {
-        if (cooldown) return;
-        cooldown = true;
+        effectCooldown = true;
         changeEffectButton.disabled = true;
 
         fetch(urlChangeEffect, {
@@ -56,18 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             console.log('Efecto cambiado:', data);
-            setTimeout(enableButton, 500); // Cooldown de 0.5 segundos
+            setTimeout(enableEffectButton, effectCooldownTime);
         })
         .catch(error => {
             console.error('Error al cambiar el efecto:', error);
             enableButton();
         });
-    });
+    };
 
 
-    speedSlider.addEventListener('input', () => {
-        if (cooldown) return;
-        cooldown = true;
+   /**
+    * Cambiar velocidad con POST api
+    */
+    function changeSpeed() {
+        if (speedCooldown) return;
+        speedCooldown = true;
 
         const speed = speedSlider.value;
 
@@ -81,12 +101,26 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             console.log('Velocidad cambiada:', data);
+            speedSlider.value = data.level;
             speedValue.textContent = data.level; // Actualizar la velocidad mostrada en pantalla
-            setTimeout(() => { cooldown = false; }, 500); // Cooldown de 0.5 segundos
+            setTimeout(() => { speedCooldown = false; }, speedCooldownTime); // Cooldown de 500 segundos
         })
         .catch(error => {
             console.error('Error al cambiar la velocidad:', error);
-            cooldown = false;
+            speedCooldown = false;
         });
-    });
+    };
+
+
+
+    // Llamar al fetch inicial
+    fetchSpeed();
+
+    // Intervalo para actualizar la velocidad cada 1 segundos
+    setInterval(fetchSpeed, FETCH_INTERVAL_MS);
+
+    // Añadir las funciones a los elementos
+    effectButton.addEventListener('click', changeEffect); 
+    speedSlider.addEventListener('change', changeSpeed);
+
 });
