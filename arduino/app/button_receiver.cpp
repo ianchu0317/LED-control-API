@@ -9,6 +9,7 @@ const byte fuente = 13;          // pin para usar como fuente 5v boton
 const byte pinSpeedUpButton = 4;
 const byte pinSpeedDownButton = 7;
 
+const bool DEBUG_MODE = false;
 
 // Variables para controlamiento del botón de efectos
 int effect_button_val;
@@ -121,17 +122,17 @@ void checkVelButtonByPin(byte pin){
       }
 
       // Debug Velocity
-      
-      Serial.print("Current level: ");
-      Serial.println(current_level);
-      Serial.print("Intercalate vel (ms): ");
-      Serial.println(intercalate_vel);
-      Serial.print("Fade vel (ms): ");
-      Serial.println(fade_vel);
-      Serial.print("In Out vel: ");
-      Serial.println(intercalate_in_out_vel);
-      Serial.println();
-      
+      if (DEBUG_MODE){
+        Serial.print("Current level: ");
+        Serial.println(current_level);
+        Serial.print("Intercalate vel (ms): ");
+        Serial.println(intercalate_vel);
+        Serial.print("Fade vel (ms): ");
+        Serial.println(fade_vel);
+        Serial.print("In Out vel: ");
+        Serial.println(intercalate_in_out_vel);
+        Serial.println();
+      }
     }
   }
 

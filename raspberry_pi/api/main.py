@@ -24,14 +24,12 @@ def get_speed():
 
 @api.post("/api/leds/change-effect")
 def change_effect(next_effect: GetNextEffect):
-    print("CHANGING EFFECT")
     set_next_effect()
     return {"message": "success"}
 
 
 @api.post("/api/leds/change-speed")
 def change_speed(speed: LedSpeedLevel):
-    print("GOT INPUT SPEED: ", speed.level)
     set_speed(speed.level)
     current_level = get_speed_value()
     # Devolver velocidad actual JSON

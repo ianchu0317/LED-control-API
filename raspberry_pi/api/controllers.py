@@ -28,7 +28,7 @@ GPIO.setup(pin_speed_up_button, GPIO.OUT)
 GPIO.setup(pin_speed_down_button, GPIO.OUT)
 
 
-#### FUNCIONES
+####    FUNCIONES
 ## AUXILIAR
 # Enviar pulsos
 def send_pulse(pin):
@@ -74,8 +74,6 @@ def set_speed(speed_level: int):
 
     check_speed_up(speed_level)
     
-    print("steps: ", calculate_steps(speed_level))
-    
     for _ in range(calculate_steps(speed_level)):
         if IS_SPEED_UP:
             send_pulse(pin_speed_up_button)
@@ -84,12 +82,3 @@ def set_speed(speed_level: int):
         sleep(change_speed_debounce_t)     # COORDINAR CON DEBOUNCE DE ARDUINO
 
     current_level = speed_level
-    #print(current_level)
-    #return current_level
-
-
-
-if __name__ == '__main__':
-    send_pulse(pin_speed_up_button)
-    print("Cleanup GPIO..")
-    GPIO.cleanup()
