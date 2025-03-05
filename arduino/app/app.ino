@@ -6,7 +6,9 @@ void setup() {
   setupLeds();
 
   // salida Serial para debug
-  Serial.begin(9600);
+  if (DEBUG_MODE){
+    Serial.begin(9600);
+  }
 }
 
 void loop() {

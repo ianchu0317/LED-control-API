@@ -3,6 +3,9 @@
 
 #include "Arduino.h"
 
+/* *** VARIABLES GLOBALES *** */
+const bool DEBUG_MODE;
+
 /* *** CONFIGURACIONES *** */
 void setupButtons();
 
