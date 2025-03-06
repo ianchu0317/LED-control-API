@@ -67,7 +67,7 @@ y una API que permite tanto modificar los patrones como ajustar su velocidad
 
 
 ## Más información
-Para detalles más específicos sobre la configuración de Arduino, consulta el archivo `arduino/README.md`.  
-Para detalles sobre la configuración de la Raspberry Pi y la API, consulta el archivo `raspberry_pi/README.md`.
+Para detalles más específicos sobre la configuración de Arduino, consulta el archivo [`arduino/README.md`](arduino/README.md).  
+Para detalles sobre la configuración de la Raspberry Pi y la API, consulta el archivo [`raspberry_pi/README.md`](raspberry_pi/README.md).
 
-La planificación del proyecto se encuentra en formato PDF dentro de `/design`
+La planificación del proyecto se encuentra en formato PDF dentro de [`/design`](design/)
