@@ -2,7 +2,7 @@
 Este proyecto permite controlar los patrones de luces LED mediante Arduino,
 con una interfaz de usuario desarrollada en Raspberry Pi que facilita su gestión desde distintos dispositivos. 
 Además, cuenta con un botón físico para cambiar entre patrones o efectos, 
-y una API que permite tanto modificar los patrones como ajustar su velocidad
+y una API que permite tanto modificar los patrones como ajustar su velocidad.
 
 ---
 
@@ -19,9 +19,12 @@ y una API que permite tanto modificar los patrones como ajustar su velocidad
 - Combinar electrónica, programación y software para aplicaciones en domótica.
 - Entender la conexión entre frontend y backend.
 - Aprender a comunicar Arduino con Raspberry Pi.
+
+
 ---
 
-## Estructura
+
+## Estructuras y carpetas
 ```
 /Led-control-API
   /design         -> Diseños, diagramas y planificación del proyecto
@@ -31,6 +34,14 @@ y una API que permite tanto modificar los patrones como ajustar su velocidad
     /api          -> Backend y servidor API en Python
     /scripts      -> Scripts de Python para pruebas y testeo
 ```
+
+
+## Requisitos (software)
+
+- **Arduino IDE** para cargar el código en el microcontrolador.
+- **Python 3** y **pip** para ejecutar el servidor y la API en la Raspberry Pi.
+- Misma conexión local (LAN) para comunicar los dispositivos.
+
 
 ## Materiales
 - Microcontroladores:
@@ -48,26 +59,28 @@ y una API que permite tanto modificar los patrones como ajustar su velocidad
   - Botón puente doble H
 
 
-## Requisitos (software)
+## Conexión Física
+Este diagrama muestra cómo conectar los 6 LEDs, el botón, y la Raspberry Pi al Arduino para asegurar un funcionamiento correcto.
+<p align=center>
+  <img src="design/breadboard_diagram_bb.jpg" width=50%>
+</p>
 
-- **Arduino IDE** para cargar el código en el microcontrolador.
-- **Python 3** y **pip** para ejecutar el servidor y la API en la Raspberry Pi.
-- Misma conexión local (LAN) para comunicar los dispositivos.
 
 
 ## Ejecución del Proyecto
 1. **Configurar el Arduino:**
-   - Abrir el archivo `app.ino` en el Arduino IDE.
+   - Abrir el archivo `app.ino` en el **Arduino IDE**.
    - Conectar el Arduino a la computadora y cargar el código.
 
 2. **Configurar la Raspberry Pi:**
-   - Clonar el repositorio en tu Raspberry Pi.
-   - Ejecutar `setup.sh` para configurar carpetas e instalar dependencias
+   - Clonar el repositorio en Raspberry Pi.
+   - Ejecutar `setup.sh` para configurar carpetas e instalar dependencias.
    - Iniciar el servidor web y API ejecutando `start.sh`
 
 
 ## Más información
-Para detalles más específicos sobre la configuración de Arduino, consulta el archivo [`arduino/README.md`](arduino/README.md).  
-Para detalles sobre la configuración de la Raspberry Pi y la API, consulta el archivo [`raspberry_pi/README.md`](raspberry_pi/README.md).
+Para detalles más específicos sobre la configuración de **Arduino**, consulta el archivo [`arduino/README.md`](arduino/README.md).  
+Para detalles sobre la configuración de la **Raspberry Pi** y la API, consulta el archivo [`raspberry_pi/README.md`](raspberry_pi/README.md).
 
-La planificación del proyecto se encuentra en formato PDF dentro de [`/design`](design/)
+Este [documento](design/planification_API_REST_control_LEDs.pdf) contiene la planificación completa del proyecto, 
+incluyendo los objetivos y los pasos a seguir durante el desarrollo.
