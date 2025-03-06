@@ -24,6 +24,11 @@ int last_vel_button_val = 0;
 int vel_button_debounce = 20;       // ms
 unsigned long last_vel_button_press = 0;
 
+// Pasos para cada nivel
+int fade_vel_step = 5;
+int intercalate_vel_step = 10; 
+int intercalate_in_out_vel_step = 10; 
+
 #define MAX_SPEED_LEVEL 9
 #define MIN_SPEED_LEVEL 1
 int current_level = 5;
@@ -49,9 +54,9 @@ void setupButtons() {
 // Auxiliares
 void speedUpEffects(){
   if (current_level < MAX_SPEED_LEVEL){
-    fade_vel = fade_vel - 5;
-    intercalate_vel = intercalate_vel - 10;
-    intercalate_in_out_vel = intercalate_in_out_vel - 5;
+    fade_vel = fade_vel - fade_vel_step;
+    intercalate_vel = intercalate_vel - intercalate_vel_step;
+    intercalate_in_out_vel = intercalate_in_out_vel - intercalate_in_out_vel_step;
     current_level = current_level + 1;
   }
 }
@@ -59,9 +64,9 @@ void speedUpEffects(){
 
 void speedDownEffects(){
   if (current_level > MIN_SPEED_LEVEL){
-    fade_vel = fade_vel + 5;
-    intercalate_vel = intercalate_vel + 10;
-    intercalate_in_out_vel = intercalate_in_out_vel + 5;
+    fade_vel = fade_vel + fade_vel_step;
+    intercalate_vel = intercalate_vel + intercalate_vel_step;
+    intercalate_in_out_vel = intercalate_in_out_vel + intercalate_in_out_vel_step;
     current_level = current_level - 1;
   }
 }
