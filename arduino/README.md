@@ -47,8 +47,8 @@ int intercalate_in_out_vel = 85;  // ms
 Para cambiar los incrementos de velocidad en cada nivel, modifica las líneas **27** a **30** del archivo `button_receiver.cpp`
 ```cpp
 // Pasos para cada nivel
-const int fade_step = 5;
-const int intercalate_step = 10; 
-const int intercalate_in_out_vel = 10; 
+int fade_vel_step = 5;
+int intercalate_vel_step = 10; 
+int intercalate_in_out_vel_step = 10; 
 ```
 
