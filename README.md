@@ -4,6 +4,8 @@ con una interfaz de usuario desarrollada en Raspberry Pi que facilita su gestió
 Además, cuenta con un botón físico para cambiar entre patrones o efectos, 
 y una API que permite tanto modificar los patrones como ajustar su velocidad.
 
+Video de demostración: [Link](https://www.tiktok.com/@_ianchuuu/video/7478852104531037495)
+
 ---
 
 ## Objetivos del Proyecto
