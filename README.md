@@ -3,7 +3,10 @@ Este proyecto permite controlar los patrones de luces LED mediante Arduino,
 con una interfaz de usuario desarrollada en Raspberry Pi que facilita su gestión desde distintos dispositivos. 
 Además, cuenta con un botón físico para cambiar entre patrones o efectos, 
 y una API que permite tanto modificar los patrones como ajustar su velocidad.
-
+<p>
+  <img src="design/project_overview.jpg" width=50%>
+</p>
+  
 Video de demostración: [Link](https://www.tiktok.com/@_ianchuuu/video/7478852104531037495)
 
 ---
